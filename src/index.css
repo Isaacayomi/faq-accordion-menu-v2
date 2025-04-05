@@ -64,6 +64,10 @@
   cursor: pointer;
 }
 
+.faq-section span p.heading-question:hover {
+  color: purple;
+}
+
 .faq-section span p {
   color: hsl(292, 42%, 14%);
   font-weight: 600;

@@ -3,25 +3,25 @@ import "./index.css";
 
 const initialQuestions = [
   {
-    id: 1,
+    id: Math.random(),
     question: "What is Frontend Mentor, and how will it help me?",
     answer:
       "Frontend Mentor offers realistic coding challenges to help developers improve their frontend coding skills with projects in HTML, CSS and JavaScript. It's suitable for all levels and ideal for portfolio building.",
   },
   {
-    id: 2,
+    id: Math.random(),
     question: "Is Frontend Mentor free?",
     answer:
       "Frontend Mentor offers realistic coding challenges to help developers improve their frontend coding skills with projects in HTML, CSS and JavaScript. It's suitable for all levels and ideal for portfolio building.",
   },
   {
-    id: 3,
+    id: Math.random(),
     question: "Can i use Frontend Mentor projects in my portfolio?",
     answer:
       "Frontend Mentor offers realistic coding challenges to help developers improve their frontend coding skills with projects in HTML, CSS and JavaScript. It's suitable for all levels and ideal for portfolio building.",
   },
   {
-    id: 4,
+    id: Math.random(),
     question: "How can i get help if i'm stuck on a challenge?",
     answer:
       "Frontend Mentor offers realistic coding challenges to help developers improve their frontend coding skills with projects in HTML, CSS and JavaScript. It's suitable for all levels and ideal for portfolio building.",
@@ -37,10 +37,12 @@ function App() {
 }
 
 function MenuContainer() {
+  const [isOpen, setIsOpen] = useState(null);
+
   return (
     <div className="menu-container">
       <Logo />
-      <Menu />
+      <Menu isOpen={isOpen} onIsOpen={setIsOpen} />
     </div>
   );
 }
@@ -58,27 +60,34 @@ function Logo() {
   );
 }
 
-function Menu() {
+function Menu({ onIsOpen, isOpen }) {
   return (
     <ul className="menu">
       {initialQuestions.map((questions) => (
-        <Accordion question={questions} key={questions.id} />
+        <Accordion
+          question={questions}
+          onIsOpen={onIsOpen}
+          isOpen={isOpen}
+          key={questions.id}
+        />
       ))}
     </ul>
   );
 }
 
-function Accordion({ question }) {
-  const [isOpen, setIsOpen] = useState(null);
-
+function Accordion({ question, onIsOpen, isOpen }) {
   function handleClick(id) {
-    setIsOpen(id === isOpen ? null : id);
+    onIsOpen(id === isOpen ? null : id);
   }
   return (
     <li className="faq-section" onClick={() => handleClick(question.id)}>
       <span>
-        <p>{question.question}</p>
-        <img src="./images/icon-plus.svg" alt="plus icon" />
+        <p className="heading-question">{question.question}</p>
+        {question.id === isOpen ? (
+          <img src="./images/icon-minus.svg" alt="minus icon" />
+        ) : (
+          <img src="./images/icon-plus.svg" alt="plus icon" />
+        )}
       </span>
       <p className="answer">
         {question.id === isOpen ? question.answer : null}
